@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Что будем хранить в шкафу или гардеробной — bvsspace</title>
+<meta name="description" content="Отметьте примерное количество вещей. По этому списку я рассчитаю полки, штанги и ящики так, чтобы всему нашлось место. Заполнение займёт 5–10 минут, точность «на глаз» подойдёт.">
+<meta property="og:title" content="Что будем хранить в шкафу или гардеробной — анкета bvsspace">
+<meta property="og:description" content="Отметьте примерное количество вещей. По этому списку я рассчитаю полки, штанги и ящики так, чтобы всему нашлось место. Заполнение займёт 5–10 минут, точность «на глаз» подойдёт.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column, header band, cards per question block, fixed bottom bar with the "done" action */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --ink:#18202E; --muted:#5D6677; --line:#DDE1E8;
+  --navy:#1F293A; --accent:#E2532F; --accent-soft:#FCE7E1; --ok:#2E7D5B; --ok-soft:#E3F2EA;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding-top:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#11151C; --surface:#1A202A; --ink:#E8EBF0; --muted:#9BA4B3; --line:#2C3441;
+  --navy:#0D1219; --accent:#F07150; --accent-soft:#3A221B; --ok:#5CC491; --ok-soft:#173226; color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;margin:0}
+.band{background:var(--navy);color:#fff;border-bottom:3px solid var(--accent)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band .wrap{padding-block:26px 22px;display:grid;gap:8px}
+.brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,5.6vw,30px);line-height:1.15;margin:0;text-wrap:balance}
+.lead{margin:0;opacity:.88;max-width:60ch}
+main .wrap{padding-block:20px 120px;display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.card>h2{font-family:var(--f-display);font-weight:500;font-size:17px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line);text-wrap:balance}
+.sub{margin:0;padding:10px 16px 2px;color:var(--muted);font-size:14px}
+.lbl{margin:0;padding:14px 16px 0;font-size:14px;font-weight:600}
+.grp{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0;padding:14px 16px 0;font-weight:600}
+.fields{display:grid;gap:12px;padding:14px 16px}
+label.f{display:grid;gap:5px;font-size:14px;font-weight:500}
+input[type=text],textarea{font:inherit;font-size:16px;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px 14px}
+.chip{font:inherit;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:40px;text-align:left}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.rows{padding-top:4px}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);min-height:56px}
+.rows .row:first-child{border-top:0}
+.row .t{min-width:0}
+.row .t b{font-weight:500;display:block}
+.row .t small{color:var(--muted);font-size:13px;display:block}
+.row.has .t b{font-weight:600}
+.step{display:flex;align-items:center;gap:4px}
+.step button{font:inherit;font-size:20px;line-height:1;width:38px;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.step input{width:52px;text-align:center;font:inherit;font-size:16px;font-weight:600;padding:7px 2px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
+.row.has .step input{border-color:var(--ok);background:var(--ok-soft)}
+.unit{font-size:12px;color:var(--muted);min-width:34px}
+.note{padding:4px 16px 14px}
+.note input{font-size:14px;padding:8px 10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.bar .wrap{padding-block:12px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.bar .sum{font-size:14px;color:var(--muted)}
+.btn{font:inherit;font-size:15px;font-weight:600;padding:12px 18px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.done{display:grid;gap:12px;padding:16px}
+.done textarea{min-height:260px;font-size:14px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.msg{font-size:14px;color:var(--ok)}
+.contact{font-size:14px;color:var(--muted);margin:0}
+.contact b{color:var(--ink);user-select:all}
+@media (prefers-reduced-motion:no-preference){.chip,.step input{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+<div class="band"><div class="wrap">
+  <div class="brand">bvsspace · мебель на заказ</div>
+  <h1>Что будем хранить в шкафу или гардеробной</h1>
+  <p class="lead">Отметьте примерное количество вещей. По этому списку я рассчитаю полки, штанги и ящики так, чтобы всему нашлось место. Заполнение займёт 5–10 минут, точность «на глаз» подойдёт.</p>
+</div></div>
+<main><div class="wrap" id="app"></div></main>
+<div class="bar"><div class="wrap">
+  <span class="sum" id="sum">Ответов: 0</span>
+  <button class="btn" id="finish" type="button">Готово — получить ответы</button>
+</div></div>
+<script>
+const C = {"slug": "hranenie", "title": "Что будем хранить в шкафу или гардеробной", "photos": "Фото вещей или нынешнего шкафа тоже пришлите — это поможет.", "sections": [{"t": "О вас и объекте", "sub": "", "note": false, "blocks": [{"type": "fields", "items": [["name", "Ваше имя", ""], ["obj", "Где будет мебель", "Например: спальня, гардеробная 2×1,8 м"], ["who", "Кто будет пользоваться и рост", "Например: я — 168 см, муж — 185 см"]]}]}, {"t": "Что это будет", "sub": "", "note": false, "blocks": [{"type": "chips", "id": "kind", "t": "", "single": false, "options": ["Гардеробная", "Шкаф распашной", "Шкаф-купе", "Шкаф в прихожую", "Встроенный в нишу", "Пока не решили"]}]}, {"t": "На плечиках", "sub": "Считайте вешалками. Длина важна: от неё зависит высота штанги.", "note": true, "blocks": [{"type": "qty", "items": [["long", "Длинная одежда", "пальто, длинные платья, шубы — от 120 см", "шт"], ["mid", "Средняя длина", "куртки, плащи, платья до колена — до 110 см", "шт"], ["short", "Короткая", "рубашки, блузки, пиджаки — до 100 см", "шт"], ["pants", "Брюки на вешалке", "сложенные пополам", "шт"], ["suits", "Костюмы, деловая одежда в чехлах", "", "шт"]]}]}, {"t": "Сложенные вещи", "sub": "Стопка — примерно 8–10 вещей.", "note": true, "blocks": [{"type": "qty", "items": [["sweaters", "Свитера, кофты, худи", "", "стопок"], ["tshirts", "Футболки, майки, топы", "", "стопок"], ["jeans", "Джинсы и брюки сложенные", "", "стопок"], ["sport", "Спортивная, домашняя одежда", "", "стопок"]]}]}, {"t": "Мелочи — в ящики", "sub": "Сколько ящиков нужно, примерно.", "note": true, "blocks": [{"type": "qty", "items": [["underwear", "Нижнее бельё", "", "ящиков"], ["socks", "Носки, колготки", "", "ящиков"], ["access", "Ремни, галстуки, платки", "", "ящиков"], ["jewelry", "Украшения, часы, очки", "", "ящиков"]]}]}, {"t": "Обувь", "sub": "", "note": true, "blocks": [{"type": "qty", "items": [["shoes", "Обувь повседневная", "кроссовки, туфли, ботинки", "пар"], ["boots", "Высокие сапоги", "нужна полка повыше", "пар"], ["shoeboxes", "Обувь в коробках", "сезонная, хранится в коробках", "коробок"]]}]}, {"t": "Сумки и головные уборы", "sub": "", "note": true, "blocks": [{"type": "qty", "items": [["bags", "Сумки", "", "шт"], ["backpacks", "Рюкзаки, спортивные сумки", "", "шт"], ["hats", "Шапки, кепки, шарфы, перчатки", "", "ящиков"]]}]}, {"t": "Для дома", "sub": "", "note": true, "blocks": [{"type": "qty", "items": [["bedding", "Постельное бельё", "", "компл."], ["towels", "Полотенца", "", "стопок"], ["blankets", "Одеяла, подушки, пледы", "", "шт"], ["suitcases", "Чемоданы", "укажите размеры в комментарии", "шт"], ["seasonbox", "Коробки с сезонными вещами", "", "шт"]]}]}, {"t": "Техника и крупное", "sub": "Если что-то из этого будет стоять в шкафу — отметьте.", "note": true, "blocks": [{"type": "qty", "items": [["vacuum", "Пылесос", "обычный или вертикальный — напишите модель", "шт"], ["ironing", "Гладильная доска, утюг, отпариватель", "", "шт"], ["dryer", "Сушилка для белья", "", "шт"], ["sportinv", "Спорт: лыжи, самокат, коврик, гантели", "", "шт"], ["safe", "Сейф", "укажите размеры", "шт"]]}]}, {"t": "Механизмы и наполнение", "sub": "Отметьте всё, что хотелось бы. Если не знаете, что это, — отметьте, я расскажу и покажу.", "note": false, "blocks": [{"type": "chips", "id": "mech", "t": "", "single": false, "groups": {"Штанги и лифты": ["Пантограф — опускающаяся штанга для верхнего яруса", "Выдвижная торцевая штанга (для неглубоких шкафов)", "Двойная штанга в два яруса", "Штанга с подсветкой", "Угловая поворотная штанга (карусель)"], "Брюки, юбки, аксессуары": ["Выдвижная брючница", "Выдвижная вешалка для юбок", "Выдвижная вешалка для галстуков и ремней", "Выдвижная вешалка для шарфов и палантинов", "Выдвижной органайзер для украшений и часов", "Полка для сумок с разделителями", "Выдвижные крючки", "Вешалка-валет (подготовить одежду на завтра)"], "Ящики и корзины": ["Ящики с доводчиками", "Открывание нажатием, без ручек", "Внутренние ящики за фасадом", "Ящики со стеклянным фасадом", "Разделители и вкладыши в ящики", "Выдвижные сетчатые корзины", "Выдвижные плетёные корзины", "Выдвижная корзина для грязного белья"], "Обувь": ["Выдвижные полки для обуви", "Наклонные полки для обуви", "Вращающаяся обувница-карусель", "Выдвижная полка для высоких сапог"], "Зеркала и уход за одеждой": ["Выдвижное поворотное зеркало", "Зеркало на фасаде", "Встроенная выдвижная гладильная доска", "Держатель для утюга или отпаривателя", "Выдвижная сушилка для белья", "Хозяйственная секция (пылесос, швабра)", "Розетка внутри шкафа"], "Углы и верхний ярус": ["Угловая поворотная полка", "Подъёмные двери на антресолях", "Откидные двери на антресолях", "Полки под чемоданы и коробки наверху", "Выдвижная лесенка-стремянка"], "Подсветка и прочее": ["Подсветка внутри с датчиком открывания", "Подсветка полок и штанг", "Скрытый ящик или место под сейф", "Выдвижной пуф или сиденье", "Вентиляция (решётки в фасадах)"]}}]}, {"t": "Двери и пожелания", "sub": "", "note": false, "blocks": [{"type": "chips", "id": "wish", "t": "", "single": false, "groups": {"Двери и фасады": ["Распашные двери с доводчиками", "Двери без ручек (открываются нажатием)", "Двери-купе", "Складные двери (гармошка)", "Без дверей (открытая гардеробная)", "Фасады со стеклом"], "Удобство": ["Открытые полки", "Отдельные зоны для каждого", "Выдвижной столик или полка для сборов"]}}, {"type": "text", "id": "comment", "t": "Что ещё важно", "ph": "Цвет, фасады, что не нравится в нынешнем шкафу, особые вещи…"}]}]};
+const KEY = "bvs-anketa-" + C.slug;
+let S = {v:{}, c:{}, q:{}, n:{}};
+try{ const r = JSON.parse(localStorage.getItem(KEY) || "null"); if(r) S = Object.assign(S, r); }catch(e){}
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sel = id => S.c[id] || [];
+
+function chipsHtml(b, list){
+  return `<div class="chips">` + list.map(x => `<button type="button" class="chip" data-chip="${b.id}" data-multi="${b.single ? 0 : 1}" data-v="${esc(x)}" aria-pressed="${sel(b.id).includes(x)}">${esc(x)}</button>`).join("") + `</div>`;
+}
+function blockHtml(b, sec){
+  if(b.type === "hint") return `<p class="sub">${esc(b.t)}</p>`;
+  if(b.type === "fields") return `<div class="fields">` + b.items.map(([id, l, ph]) => `<label class="f" for="f-${id}">${esc(l)}<input type="text" id="f-${id}" data-v="${id}" value="${esc(S.v[id] || "")}" placeholder="${esc(ph || "")}"></label>`).join("") + `</div>`;
+  if(b.type === "text") return `<div class="fields"><label class="f" for="f-${b.id}">${esc(b.t)}<textarea id="f-${b.id}" data-v="${b.id}" placeholder="${esc(b.ph || "")}">${esc(S.v[b.id] || "")}</textarea></label></div>`;
+  if(b.type === "chips"){
+    const head = (b.t ? `<p class="lbl">${esc(b.t)}${b.single ? "" : ` <span style="font-weight:400;color:var(--muted)">— можно несколько</span>`}</p>` : "");
+    if(b.groups) return head + Object.entries(b.groups).map(([g, l]) => `<h3 class="grp">${esc(g)}</h3>` + chipsHtml(b, l)).join("");
+    return head + chipsHtml(b, b.options);
+  }
+  if(b.type === "qty"){
+    let h = `<div class="rows">` + b.items.map(([id, t, hint, u]) => { const v = +S.q[id] || 0;
+      return `<div class="row ${v ? "has" : ""}" data-row="${id}"><div class="t"><b>${esc(t)}</b>${hint ? `<small>${esc(hint)}</small>` : ""}</div><div class="step"><button type="button" data-d="-1" data-id="${id}" aria-label="Меньше: ${esc(t)}">−</button><input id="q-${id}" inputmode="numeric" data-q="${id}" value="${v || ""}" placeholder="0" aria-label="${esc(t)}, ${esc(u)}"><button type="button" data-d="1" data-id="${id}" aria-label="Больше: ${esc(t)}">+</button><span class="unit">${esc(u)}</span></div></div>`; }).join("") + `</div>`;
+    return h;
+  }
+  return "";
+}
+function render(){
+  let h = "";
+  C.sections.forEach((s, si) => {
+    h += `<section class="card"><h2>${esc(s.t)}</h2>` + (s.sub ? `<p class="sub">${esc(s.sub)}</p>` : "") + s.blocks.map(b => blockHtml(b, s)).join("");
+    if(s.note) h += `<div class="note"><input type="text" id="n-${si}" data-n="${si}" value="${esc(S.n[si] || "")}" placeholder="Комментарий к разделу (необязательно)"></div>`;
+    h += `</section>`;
+  });
+  h += `<section class="card" id="result" hidden></section>`;
+  document.getElementById("app").innerHTML = h; updSum();
+}
+function count(){ return Object.values(S.q).filter(v => +v > 0).length + Object.values(S.c).reduce((a, l) => a + l.length, 0) + Object.values(S.v).filter(v => String(v).trim()).length; }
+function updSum(){ document.getElementById("sum").textContent = `Ответов: ${count()}`; }
+function setQ(id, v){
+  v = Math.max(0, Math.min(999, Math.round(+v || 0))); if(v) S.q[id] = v; else delete S.q[id]; save();
+  const row = document.querySelector(`[data-row="${id}"]`); row.classList.toggle("has", !!v);
+  const inp = document.getElementById("q-" + id); if(document.activeElement !== inp) inp.value = v || "";
+  updSum();
+}
+function report(){
+  const L = []; const d = new Date(); const dt = [d.getDate(), d.getMonth() + 1, d.getFullYear()].map(x => String(x).padStart(2, "0")).join(".");
+  L.push(`${C.title.toUpperCase()} — bvsspace (${dt})`);
+  C.sections.forEach((s, si) => {
+    const out = [];
+    s.blocks.forEach(b => {
+      if(b.type === "fields") b.items.forEach(([id, l]) => { const v = (S.v[id] || "").trim(); if(v) out.push(`${l}: ${v}`); });
+      if(b.type === "text"){ const v = (S.v[b.id] || "").trim(); if(v) out.push(`${b.t}: ${v}`); }
+      if(b.type === "qty") b.items.forEach(([id, t, , u]) => { if(+S.q[id] > 0) out.push(`• ${t} — ${S.q[id]} ${u}`); });
+      if(b.type === "chips"){
+        const all = sel(b.id); if(!all.length) return;
+        if(b.groups){ if(b.t) out.push(b.t + ":"); Object.entries(b.groups).forEach(([g, l]) => { const x = l.filter(o => all.includes(o)); if(x.length){ out.push(g + ":"); x.forEach(o => out.push("• " + o)); } }); }
+        else { const x = b.options.filter(o => all.includes(o)); if(b.t) out.push(`${b.t}: ${x.join(", ")}`); else x.forEach(o => out.push("• " + o)); }
+      }
+    });
+    const note = (S.n[si] || "").trim(); if(note) out.push(`Комментарий: ${note}`);
+    if(out.length){ L.push(""); L.push(s.t.toUpperCase() + ":"); L.push(...out); }
+  });
+  return L.join("\n");
+}
+function showResult(){
+  const r = document.getElementById("result"); r.hidden = false;
+  r.innerHTML = `<h2>Ваши ответы</h2><div class="done"><p class="sub" style="padding:0">Нажмите «Скопировать», затем вставьте текст в WhatsApp или Telegram и отправьте мне.${C.photos ? " " + esc(C.photos) : ""}</p>
+   <textarea id="out" readonly>${esc(report())}</textarea>
+   <div class="acts"><button class="btn" type="button" id="copy">Скопировать</button><span class="msg" id="cmsg" aria-live="polite"></span></div>
+   <p class="contact">Владислав, bvsspace: <b>+7 910 019-80-80</b> · <b>vbs0405@mail.ru</b></p></div>`;
+  r.scrollIntoView({behavior: "smooth", block: "start"});
+}
+const app = document.getElementById("app");
+app.addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.d){ setQ(b.dataset.id, (+S.q[b.dataset.id] || 0) + (+b.dataset.d)); return; }
+  if(b.dataset.chip){
+    const k = b.dataset.chip, v = b.dataset.v, l = sel(k), on = l.includes(v);
+    if(b.dataset.multi === "1") S.c[k] = on ? l.filter(x => x !== v) : l.concat(v);
+    else { S.c[k] = on ? [] : [v]; app.querySelectorAll(`[data-chip="${k}"]`).forEach(x => x.setAttribute("aria-pressed", "false")); }
+    b.setAttribute("aria-pressed", S.c[k].includes(v)); if(!S.c[k].length) delete S.c[k]; save(); updSum(); return;
+  }
+  if(b.id === "copy"){
+    const t = document.getElementById("out"), m = document.getElementById("cmsg");
+    const fallback = () => { t.focus(); t.select(); try{ if(document.execCommand("copy")){ m.textContent = "Скопировано. Вставьте в сообщение."; return; } }catch(e){} m.textContent = "Текст выделен — нажмите «Копировать» в меню телефона."; };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(() => { m.textContent = "Скопировано. Вставьте в сообщение."; }).catch(fallback); else fallback();
+  }
+});
+app.addEventListener("input", e => {
+  const el = e.target;
+  if(el.dataset.q){ setQ(el.dataset.q, el.value.replace(/\D/g, "")); return; }
+  if(el.dataset.n !== undefined){ S.n[el.dataset.n] = el.value; save(); return; }
+  if(el.dataset.v){ S.v[el.dataset.v] = el.value; save(); updSum(); }
+});
+document.getElementById("finish").onclick = showResult;
+render();
+</script>
+</body>
+</html>

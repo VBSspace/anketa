@@ -3,219 +3,61 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Анкета bvsspace: что будет храниться в шкафу или гардеробной">
-<meta property="og:title" content="Что будем хранить — анкета bvsspace">
-<meta property="og:description" content="Отметьте вещи и пожелания — по ним я спроектирую шкаф или гардеробную.">
-<style>[hidden]{display:none!important}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
-<title>Что будем хранить — bvsspace</title>
+<title>Анкеты bvsspace</title>
+<meta name="description" content="Анкеты для клиентов bvsspace: мебель на заказ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
 <style>
-/* Layout: one narrow column, header band, category cards with steppers, sticky bottom bar with the "send" action */
+/* Layout: header band, two cards with anketa lists; each row has open + copy-link actions */
 :root{
   --bg:#F3F4F6; --surface:#FFFFFF; --ink:#18202E; --muted:#5D6677; --line:#DDE1E8;
-  --navy:#1F293A; --accent:#E2532F; --accent-soft:#FCE7E1; --ok:#2E7D5B; --ok-soft:#E3F2EA;
+  --navy:#1F293A; --accent:#E2532F; --ok:#2E7D5B;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+@media (prefers-color-scheme:dark){:root{
   --bg:#11151C; --surface:#1A202A; --ink:#E8EBF0; --muted:#9BA4B3; --line:#2C3441;
-  --navy:#0D1219; --accent:#F07150; --accent-soft:#3A221B; --ok:#5CC491; --ok-soft:#173226; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#11151C; --surface:#1A202A; --ink:#E8EBF0; --muted:#9BA4B3; --line:#2C3441;
-  --navy:#0D1219; --accent:#F07150; --accent-soft:#3A221B; --ok:#5CC491; --ok-soft:#173226; color-scheme:dark}
+  --navy:#0D1219; --accent:#F07150; --ok:#5CC491; color-scheme:dark}}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;margin:0}
 .band{background:var(--navy);color:#fff;border-bottom:3px solid var(--accent)}
-.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .band .wrap{padding-block:26px 22px;display:grid;gap:8px}
 .brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-h1{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,5.6vw,30px);line-height:1.15;margin:0;text-wrap:balance}
-.lead{margin:0;opacity:.88;max-width:60ch}
-main .wrap{padding-block:20px 120px;display:grid;gap:16px}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,5.6vw,30px);margin:0}
+.lead{margin:0;opacity:.88}
+main .wrap{padding-block:20px 40px;display:grid;gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.card>h2{font-family:var(--f-display);font-weight:500;font-size:17px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:baseline;text-wrap:balance}
-.card>h2 .cnt{font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap}
-.card>h2 .cnt.on{color:var(--ok)}
-.card .sub{margin:0;padding:10px 16px 2px;color:var(--muted);font-size:14px}
-.fields{display:grid;gap:12px;padding:14px 16px}
-label.f{display:grid;gap:5px;font-size:14px;font-weight:500}
-input[type=text],textarea{font:inherit;font-size:16px;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
-textarea{min-height:84px;resize:vertical}
-input:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:14px 16px}
-.chip{font:inherit;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:40px}
-.grp{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0;padding:14px 16px 0;font-weight:600}
-.grp+.chips{padding-top:8px}
-.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
-.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);min-height:56px}
-.row:first-of-type{border-top:0}
-.row .t{min-width:0}
-.row .t b{font-weight:500;display:block}
-.row .t small{color:var(--muted);font-size:13px;display:block}
-.row.has .t b{color:var(--ink);font-weight:600}
-.step{display:flex;align-items:center;gap:4px}
-.step button{font:inherit;font-size:20px;line-height:1;width:38px;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
-.step input{width:52px;text-align:center;font:inherit;font-size:16px;font-weight:600;padding:7px 2px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
-.row.has .step input{border-color:var(--ok);background:var(--ok-soft)}
-.unit{font-size:12px;color:var(--muted);min-width:34px}
-.note{padding:4px 16px 14px}
-.note input{font-size:14px;padding:8px 10px}
-.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
-.bar .wrap{padding-block:12px;display:flex;gap:12px;align-items:center;justify-content:space-between}
-.bar .sum{font-size:14px;color:var(--muted)}
-.btn{font:inherit;font-size:15px;font-weight:600;padding:12px 18px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.card h2{font-family:var(--f-display);font-weight:500;font-size:17px;margin:0;padding:14px 16px;border-bottom:1px solid var(--line)}
+ul{list-style:none;margin:0;padding:0}
+.it{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.it:first-child{border-top:0}
+.it .t{min-width:0;display:grid;gap:2px}
+.it small{color:var(--muted);font-size:13px}
+.it code{font-size:12px;color:var(--muted)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{font:inherit;font-size:14px;font-weight:600;padding:9px 12px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;text-decoration:none;white-space:nowrap}
 .btn.ghost{background:transparent;color:var(--accent)}
-.done{display:grid;gap:12px;padding:16px}
-.done textarea{min-height:260px;font-size:14px;background:var(--bg)}
-.done .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.msg{font-size:14px;color:var(--ok)}
-.contact{font-size:14px;color:var(--muted)}
-.contact b{color:var(--ink);user-select:all}
-@media (prefers-reduced-motion:no-preference){.chip,.step input{transition:background .15s,border-color .15s}}
+.btn.done{background:var(--ok);border-color:var(--ok)}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:560px){.it{grid-template-columns:1fr}.acts{justify-content:flex-start}}
 </style>
 </head>
 <body>
-
 <div class="band"><div class="wrap">
   <div class="brand">bvsspace · мебель на заказ</div>
-  <h1>Что будем хранить в шкафу или гардеробной</h1>
-  <p class="lead">Отметьте примерное количество вещей. По этому списку я рассчитаю полки, штанги и ящики так, чтобы всему нашлось место. Заполнение займёт 5–10 минут, точность «на глаз» подойдёт.</p>
+  <h1>Анкеты для клиентов</h1>
+  <p class="lead">Выберите анкету по вашему проекту. Ответы копируются одной кнопкой и отправляются в мессенджер.</p>
 </div></div>
-
-<main><div class="wrap" id="app"></div></main>
-
-<div class="bar"><div class="wrap">
-  <span class="sum" id="sum">Отмечено позиций: 0</span>
-  <button class="btn" id="finish" type="button">Готово — получить ответы</button>
-</div></div>
-
+<main><div class="wrap"><section class="card"><h2>Анкеты по мебели</h2><ul><li class="it"><div class="t"><b>Шкаф или гардеробная</b><small>Отметьте примерное количество вещей.</small><code>mebel/hranenie/</code></div><div class="acts"><a class="btn ghost" href="mebel/hranenie/">Открыть</a><button class="btn" type="button" data-copy="mebel/hranenie/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Кухня</b><small>Расскажите, как вы готовите и что храните на кухне.</small><code>mebel/kuhnya/</code></div><div class="acts"><a class="btn ghost" href="mebel/kuhnya/">Открыть</a><button class="btn" type="button" data-copy="mebel/kuhnya/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Прихожая</b><small>Отметьте, сколько вещей и обуви должно помещаться в прихожей.</small><code>mebel/prihozhaya/</code></div><div class="acts"><a class="btn ghost" href="mebel/prihozhaya/">Открыть</a><button class="btn" type="button" data-copy="mebel/prihozhaya/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Детская</b><small>Расскажите о ребёнке и его привычках.</small><code>mebel/detskaya/</code></div><div class="acts"><a class="btn ghost" href="mebel/detskaya/">Открыть</a><button class="btn" type="button" data-copy="mebel/detskaya/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Ванная и санузел</b><small>Отметьте, какая мебель нужна и что в ней хранить.</small><code>mebel/vannaya/</code></div><div class="acts"><a class="btn ghost" href="mebel/vannaya/">Открыть</a><button class="btn" type="button" data-copy="mebel/vannaya/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>ТВ-зона и гостиная</b><small>Расскажите, какая техника будет стоять и что хранить.</small><code>mebel/tv-zona/</code></div><div class="acts"><a class="btn ghost" href="mebel/tv-zona/">Открыть</a><button class="btn" type="button" data-copy="mebel/tv-zona/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Кабинет и рабочее место</b><small>Расскажите, как вы работаете.</small><code>mebel/kabinet/</code></div><div class="acts"><a class="btn ghost" href="mebel/kabinet/">Открыть</a><button class="btn" type="button" data-copy="mebel/kabinet/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Балкон и кладовка</b><small>Отметьте, что будет храниться.</small><code>mebel/balkon/</code></div><div class="acts"><a class="btn ghost" href="mebel/balkon/">Открыть</a><button class="btn" type="button" data-copy="mebel/balkon/">Скопировать ссылку</button></div></li></ul></section><section class="card"><h2>Общие анкеты</h2><ul><li class="it"><div class="t"><b>Перед замером</b><small>Пара минут, чтобы я приехал на замер подготовленным и с нужными вопросами.</small><code>obshchie/pered-zamerom/</code></div><div class="acts"><a class="btn ghost" href="obshchie/pered-zamerom/">Открыть</a><button class="btn" type="button" data-copy="obshchie/pered-zamerom/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Стиль и материалы</b><small>Отметьте, что вам нравится.</small><code>obshchie/stil-i-materialy/</code></div><div class="acts"><a class="btn ghost" href="obshchie/stil-i-materialy/">Открыть</a><button class="btn" type="button" data-copy="obshchie/stil-i-materialy/">Скопировать ссылку</button></div></li><li class="it"><div class="t"><b>Отзыв после монтажа</b><small>Спасибо, что выбрали bvsspace! Пара минут на отзыв поможет мне работать лучше.</small><code>obshchie/otzyv/</code></div><div class="acts"><a class="btn ghost" href="obshchie/otzyv/">Открыть</a><button class="btn" type="button" data-copy="obshchie/otzyv/">Скопировать ссылку</button></div></li></ul></section></div></main>
 <script>
-const CATS = [
- {id:"hang", t:"На плечиках", sub:"Считайте вешалками. Длина важна: от неё зависит высота штанги.", items:[
-  ["long","Длинная одежда","пальто, длинные платья, шубы — от 120 см","шт"],
-  ["mid","Средняя длина","куртки, плащи, платья до колена — до 110 см","шт"],
-  ["short","Короткая","рубашки, блузки, пиджаки — до 100 см","шт"],
-  ["pants","Брюки на вешалке","сложенные пополам","шт"],
-  ["suits","Костюмы, деловая одежда в чехлах","","шт"]]},
- {id:"fold", t:"Сложенные вещи", sub:"Стопка — примерно 8–10 вещей.", items:[
-  ["sweaters","Свитера, кофты, худи","","стопок"],
-  ["tshirts","Футболки, майки, топы","","стопок"],
-  ["jeans","Джинсы и брюки сложенные","","стопок"],
-  ["sport","Спортивная, домашняя одежда","","стопок"]]},
- {id:"small", t:"Мелочи — в ящики", sub:"Сколько ящиков нужно, примерно.", items:[
-  ["underwear","Нижнее бельё","","ящиков"],
-  ["socks","Носки, колготки","","ящиков"],
-  ["access","Ремни, галстуки, платки","","ящиков"],
-  ["jewelry","Украшения, часы, очки","","ящиков"]]},
- {id:"shoes", t:"Обувь", sub:"", items:[
-  ["shoes","Обувь повседневная","кроссовки, туфли, ботинки","пар"],
-  ["boots","Высокие сапоги","нужна полка повыше","пар"],
-  ["shoeboxes","Обувь в коробках","сезонная, хранится в коробках","коробок"]]},
- {id:"acc", t:"Сумки и головные уборы", sub:"", items:[
-  ["bags","Сумки","","шт"],
-  ["backpacks","Рюкзаки, спортивные сумки","","шт"],
-  ["hats","Шапки, кепки, шарфы, перчатки","","ящиков"]]},
- {id:"home", t:"Для дома", sub:"", items:[
-  ["bedding","Постельное бельё","комплектов","компл."],
-  ["towels","Полотенца","стопок","стопок"],
-  ["blankets","Одеяла, подушки, пледы","","шт"],
-  ["suitcases","Чемоданы","укажите размеры в комментарии","шт"],
-  ["seasonbox","Коробки с сезонными вещами","","шт"]]},
- {id:"tech", t:"Техника и крупное", sub:"Если что-то из этого будет стоять в шкафу — отметьте.", items:[
-  ["vacuum","Пылесос","обычный или вертикальный — напишите модель","шт"],
-  ["ironing","Гладильная доска, утюг, отпариватель","","шт"],
-  ["dryer","Сушилка для белья","","шт"],
-  ["sportinv","Спорт: лыжи, самокат, коврик, гантели","","шт"],
-  ["safe","Сейф","укажите размеры","шт"]]}
-];
-const KINDS = ["Гардеробная","Шкаф распашной","Шкаф-купе","Шкаф в прихожую","Встроенный в нишу","Пока не решили"];
-const WISH = {
- "Двери и фасады":["Распашные двери с доводчиками","Двери без ручек (открываются нажатием)","Двери-купе","Складные двери (гармошка)","Без дверей (открытая гардеробная)","Фасады со стеклом"],
- "Удобство":["Открытые полки","Отдельные зоны для каждого","Выдвижной столик или полка для сборов"]
-};
-const MECH = [
- ["Штанги и лифты",["Пантограф — опускающаяся штанга для верхнего яруса","Выдвижная торцевая штанга (для неглубоких шкафов)","Двойная штанга в два яруса","Штанга с подсветкой","Угловая поворотная штанга (карусель)"]],
- ["Брюки, юбки, аксессуары",["Выдвижная брючница","Выдвижная вешалка для юбок","Выдвижная вешалка для галстуков и ремней","Выдвижная вешалка для шарфов и палантинов","Выдвижной органайзер для украшений и часов","Полка для сумок с разделителями","Выдвижные крючки","Вешалка-валет (подготовить одежду на завтра)"]],
- ["Ящики и корзины",["Ящики с доводчиками","Открывание нажатием, без ручек","Внутренние ящики за фасадом","Ящики со стеклянным фасадом","Разделители и вкладыши в ящики","Выдвижные сетчатые корзины","Выдвижные плетёные корзины","Выдвижная корзина для грязного белья"]],
- ["Обувь",["Выдвижные полки для обуви","Наклонные полки для обуви","Вращающаяся обувница-карусель","Выдвижная полка для высоких сапог"]],
- ["Зеркала и уход за одеждой",["Выдвижное поворотное зеркало","Зеркало на фасаде","Встроенная выдвижная гладильная доска","Держатель для утюга или отпаривателя","Выдвижная сушилка для белья","Хозяйственная секция (пылесос, швабра)","Розетка внутри шкафа"]],
- ["Углы и верхний ярус",["Угловая поворотная полка","Подъёмные двери на антресолях","Откидные двери на антресолях","Полки под чемоданы и коробки наверху","Выдвижная лесенка-стремянка"]],
- ["Подсветка и прочее",["Подсветка внутри с датчиком открывания","Подсветка полок и штанг","Скрытый ящик или место под сейф","Выдвижной пуф или сиденье","Вентиляция (решётки в фасадах)"]]
-];
-
-const KEY="bvs-anketa";
-let S={q:{},n:{},kinds:[],wish:[],mech:[],name:"",obj:"",who:"",comment:""};
-try{ const r=JSON.parse(localStorage.getItem(KEY)||"null"); if(r) S=Object.assign(S,r); if(!Array.isArray(S.mech)) S.mech=[]; S.wish=S.wish.filter(w=>Object.values(WISH).flat().includes(w)); }catch(e){}
-const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-
-function groupsHtml(groups,key){ return Object.entries(groups).map(([g,list])=>`<h3 class="grp">${esc(g)}</h3>`+chipsHtml(list,key)).join(""); }
-function chipsHtml(list,key){ return `<div class="chips">`+list.map((x,i)=>`<button type="button" class="chip" data-chip="${key}" data-v="${esc(x)}" aria-pressed="${S[key].includes(x)}">${esc(x)}</button>`).join("")+`</div>`; }
-function catCount(c){ return c.items.filter(it=>+S.q[it[0]]>0).length; }
-function render(){
-  let h=`<section class="card"><h2>О вас и объекте</h2><div class="fields">
-    <label class="f" for="name">Ваше имя<input type="text" id="name" data-f="name" value="${esc(S.name)}" autocomplete="name"></label>
-    <label class="f" for="obj">Где будет мебель<input type="text" id="obj" data-f="obj" value="${esc(S.obj)}" placeholder="Например: спальня, гардеробная 2×1,8 м"></label>
-    <label class="f" for="who">Кто будет пользоваться и рост<input type="text" id="who" data-f="who" value="${esc(S.who)}" placeholder="Например: я — 168 см, муж — 185 см"></label>
-  </div></section>
-  <section class="card"><h2>Что это будет</h2>${chipsHtml(KINDS,"kinds")}</section>`;
-  CATS.forEach(c=>{ const n=catCount(c);
-    h+=`<section class="card" id="c-${c.id}"><h2>${esc(c.t)}<span class="cnt ${n?'on':''}">${n?`отмечено ${n}`:""}</span></h2>${c.sub?`<p class="sub">${esc(c.sub)}</p>`:""}<div>`;
-    c.items.forEach(([id,t,hint,u])=>{ const v=+S.q[id]||0;
-      h+=`<div class="row ${v?'has':''}" data-row="${id}"><div class="t"><b>${esc(t)}</b>${hint?`<small>${esc(hint)}</small>`:""}</div>
-        <div class="step"><button type="button" data-d="-1" data-id="${id}" aria-label="Меньше: ${esc(t)}">−</button><input id="q-${id}" inputmode="numeric" data-q="${id}" value="${v||""}" placeholder="0" aria-label="${esc(t)}, ${u}"><button type="button" data-d="1" data-id="${id}" aria-label="Больше: ${esc(t)}">+</button><span class="unit">${u}</span></div></div>`;
-    });
-    h+=`</div><div class="note"><input type="text" id="n-${c.id}" data-n="${c.id}" value="${esc(S.n[c.id]||"")}" placeholder="Комментарий к разделу (необязательно)"></div></section>`;
-  });
-  h+=`<section class="card"><h2>Механизмы и наполнение<span class="cnt" id="mcnt"></span></h2><p class="sub">Отметьте всё, что хотелось бы. Если не знаете, что это, — отметьте, я расскажу и покажу.</p>`+MECH.map(([g,l])=>`<h3 class="grp">${esc(g)}</h3>${chipsHtml(l,"mech")}`).join("")+`</section>`;
-  h+=`<section class="card"><h2>Двери и пожелания</h2>${groupsHtml(WISH,"wish")}<div class="fields"><label class="f" for="comment">Что ещё важно<textarea id="comment" data-f="comment" placeholder="Цвет, фасады, что не нравится в нынешнем шкафу, особые вещи…">${esc(S.comment)}</textarea></label></div></section>
-  <section class="card" id="result" hidden></section>`;
-  document.getElementById("app").innerHTML=h; updSum();
-}
-function updSum(){ const mc=document.getElementById('mcnt'); if(mc){ mc.textContent=S.mech.length?`выбрано ${S.mech.length}`:''; mc.classList.toggle('on',!!S.mech.length);} const n=Object.values(S.q).filter(v=>+v>0).length; document.getElementById("sum").textContent=`Отмечено позиций: ${n}`; }
-function setQ(id,v){ v=Math.max(0,Math.min(999,Math.round(+v||0))); if(v) S.q[id]=v; else delete S.q[id]; save();
-  const row=document.querySelector(`[data-row="${id}"]`); row.classList.toggle("has",!!v); const inp=document.getElementById("q-"+id); if(document.activeElement!==inp) inp.value=v||"";
-  const c=CATS.find(c=>c.items.some(i=>i[0]===id)); const n=catCount(c); const cnt=document.querySelector(`#c-${c.id} .cnt`); cnt.textContent=n?`отмечено ${n}`:""; cnt.classList.toggle("on",!!n); updSum(); }
-
-function report(){
-  const L=[]; const d=new Date(); const dt=[d.getDate(),d.getMonth()+1,d.getFullYear()].map(x=>String(x).padStart(2,"0")).join(".");
-  L.push(`АНКЕТА ХРАНЕНИЯ — bvsspace (${dt})`);
-  if(S.name) L.push(`Имя: ${S.name}`); if(S.obj) L.push(`Где: ${S.obj}`); if(S.who) L.push(`Кто пользуется: ${S.who}`);
-  if(S.kinds.length) L.push(`Тип: ${S.kinds.join(", ")}`);
-  CATS.forEach(c=>{ const rows=c.items.filter(it=>+S.q[it[0]]>0); const note=(S.n[c.id]||"").trim(); if(!rows.length&&!note) return;
-    L.push(""); L.push(c.t.toUpperCase()+":"); rows.forEach(([id,t,,u])=>L.push(`• ${t} — ${S.q[id]} ${u}`)); if(note) L.push(`  Комментарий: ${note}`); });
-  if(S.mech.length){ L.push(""); L.push("МЕХАНИЗМЫ И НАПОЛНЕНИЕ:"); MECH.forEach(([g,l])=>{ const sel=l.filter(x=>S.mech.includes(x)); if(sel.length){ L.push(g+":"); sel.forEach(x=>L.push("• "+x)); } }); }
-  if(S.wish.length){ L.push(""); L.push("ДВЕРИ И ПОЖЕЛАНИЯ:"); Object.entries(WISH).forEach(([g,list])=>{ const sel=list.filter(w=>S.wish.includes(w)); if(sel.length){ L.push(g+":"); sel.forEach(w=>L.push("• "+w)); } }); }
-  if(S.comment.trim()){ L.push(""); L.push("ЕЩЁ: "+S.comment.trim()); }
-  return L.join("\n");
-}
-function showResult(){
-  const r=document.getElementById("result"); r.hidden=false;
-  r.innerHTML=`<h2>Ваши ответы</h2><div class="done"><p class="sub" style="padding:0">Нажмите «Скопировать», затем вставьте текст в WhatsApp или Telegram и отправьте мне. Фото вещей или нынешнего шкафа тоже пришлите — это поможет.</p>
-   <textarea id="out" readonly>${esc(report())}</textarea>
-   <div class="acts"><button class="btn" type="button" id="copy">Скопировать</button><span class="msg" id="cmsg" aria-live="polite"></span></div>
-   <p class="contact">Владислав, bvsspace: <b>+7 910 019-80-80</b> · <b>vbs0405@mail.ru</b></p></div>`;
-  r.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-const app=document.getElementById("app");
-app.addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b) return;
-  if(b.dataset.d){ setQ(b.dataset.id,(+S.q[b.dataset.id]||0)+(+b.dataset.d)); return; }
-  if(b.dataset.chip){ const k=b.dataset.chip,v=b.dataset.v; S[k]=S[k].includes(v)?S[k].filter(x=>x!==v):S[k].concat(v); b.setAttribute("aria-pressed",S[k].includes(v)); save(); updSum(); return; }
-  if(b.id==="copy"){ const t=document.getElementById("out"), m=document.getElementById("cmsg");
-    navigator.clipboard.writeText(t.value).then(()=>{ m.textContent="Скопировано. Вставьте в сообщение."; }).catch(()=>{ t.focus(); t.select(); m.textContent="Текст выделен — нажмите «Копировать» в меню телефона."; }); }
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-copy]"); if(!b) return;
+  const url = new URL(b.dataset.copy, location.href).href;
+  const ok = () => { const t = b.textContent; b.textContent = "Скопировано"; b.classList.add("done"); setTimeout(() => { b.textContent = t; b.classList.remove("done"); }, 1600); };
+  const fb = () => { const ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); ok(); }catch(err){ b.textContent = url; } ta.remove(); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok).catch(fb); else fb();
 });
-app.addEventListener("input",e=>{
-  const el=e.target;
-  if(el.dataset.q){ setQ(el.dataset.q, el.value.replace(/\D/g,"")); return; }
-  if(el.dataset.n!==undefined){ S.n[el.dataset.n]=el.value; save(); return; }
-  if(el.dataset.f){ S[el.dataset.f]=el.value; save(); }
-});
-document.getElementById("finish").onclick=showResult;
-render();
 </script>
-
 </body>
 </html>
