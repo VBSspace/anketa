@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Анкета проекта — BVSspace</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--or:#e07020;--ink:#2b2724;--mut:#5f5852;--line:rgba(43,39,36,.13);--paper:#f4efe8}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+button:focus,div:focus{outline:none}
+button:focus-visible{outline:2px solid var(--or);outline-offset:2px}
+.gal{-webkit-user-select:none;user-select:none}
+html,body{height:100%;overflow:hidden}
+body{font-family:Montserrat,system-ui,sans-serif;color:var(--ink);background:#1d1a17;-webkit-font-smoothing:antialiased}
+
+/* ===== 1. ГАЛЕРЕЯ: фото на весь экран, целиком ===== */
+.gal{position:fixed;inset:0;overflow:hidden;touch-action:pan-y}
+.cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.gal::after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--hb,200px) + 30px);background:linear-gradient(0deg,rgba(15,12,10,.55),rgba(15,12,10,0));pointer-events:none}
+.mark{position:fixed;left:18px;top:16px;z-index:7;display:flex;align-items:center;gap:10px;color:#fff;pointer-events:none;opacity:.92;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.mark b{border:1.5px solid rgba(255,255,255,.9);padding:6px 11px;font-weight:800;font-size:15px;letter-spacing:.4px;background:rgba(0,0,0,.18);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.mark b span{font-weight:400}
+.mark small{font-size:9px;letter-spacing:3px;text-transform:uppercase;line-height:1.5;opacity:.9}
+.arr{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.18);color:#fff;font-size:18px;cursor:pointer}
+.arr.l{left:16px}.arr.r{right:16px}
+.hero{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 22px max(26px,env(safe-area-inset-bottom));color:#fff;display:flex;flex-direction:column;align-items:center;text-align:center}
+.cap{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:.8;margin-bottom:10px;min-height:14px}
+.dots{display:flex;gap:6px;margin-bottom:18px}
+.dots i{width:16px;height:2px;border-radius:2px;background:rgba(255,255,255,.4);transition:all .4s}
+.dots i.on{width:28px;background:#fff}
+.hero h1{font-size:26px;line-height:1.2;font-weight:700;margin-bottom:8px;max-width:560px}
+.hero p{font-size:14px;line-height:1.5;opacity:.85;margin-bottom:18px;max-width:460px}
+.cta{border:0;border-radius:14px;background:var(--or);color:#fff;font:600 15px Montserrat;padding:16px 28px;width:100%;max-width:380px;cursor:pointer;box-shadow:0 8px 24px rgba(224,112,32,.35)}
+.cta:active{transform:scale(.98)}
+
+/* ===== 2. АНКЕТА поверх: фото уходит в размытый фон ===== */
+.layer{position:fixed;inset:0;z-index:6;visibility:hidden;background:rgba(20,16,13,.35);opacity:0;pointer-events:none;transition:opacity .5s,visibility 0s .5s;display:flex;align-items:center;justify-content:center;padding:16px}
+body.form .layer{opacity:1;pointer-events:auto;visibility:visible;transition:opacity .5s,visibility 0s}
+body.form .hero,body.form .arr{opacity:0;pointer-events:none}
+.hero,.arr{transition:opacity .4s}
+.sheet{width:100%;max-width:520px;max-height:calc(100% - 20px);overflow:auto;background:rgba(246,241,234,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:22px;padding:26px 24px 22px;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(30px);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+body.form .sheet{transform:none}
+.card{width:100%;max-width:470px}
+.prog{display:flex;gap:6px;margin-bottom:22px}
+.prog i{flex:1;height:3px;border-radius:3px;background:rgba(43,39,36,.12);transition:background .3s}
+.prog i.done{background:var(--or)}
+.step{display:none;animation:in .35s ease}
+.step.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kick{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--or);font-weight:700;margin-bottom:10px}
+h1{font-size:28px;line-height:1.18;font-weight:700;margin-bottom:10px}
+h2{font-size:22px;line-height:1.25;font-weight:700;margin-bottom:6px}
+p.lead{font-size:14px;line-height:1.6;color:var(--mut);margin-bottom:18px}
+.q{font-size:13px;font-weight:600;margin:16px 0 8px}
+.q small{font-weight:400;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font:500 13px Montserrat;color:var(--ink);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--or)}
+.chip.sel{background:var(--or);border-color:var(--or);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px;font:600 13px Montserrat;color:var(--ink);text-align:left;cursor:pointer;display:flex;gap:10px;align-items:center;transition:all .15s}
+.tile svg{flex:none;width:26px;height:26px;stroke:var(--or);fill:none;stroke-width:1.6}
+.tile.sel{border-color:var(--or);box-shadow:0 0 0 2px var(--or) inset}
+input[type=text],input[type=tel],textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font:500 14px Montserrat;color:var(--ink);outline:none}
+input:focus,textarea:focus{border-color:var(--or)}
+textarea{min-height:80px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.5;color:var(--mut);margin-top:14px}
+.agree input{margin-top:3px;accent-color:var(--or);width:16px;height:16px;flex:none}
+.agree a{color:var(--ink);cursor:pointer;text-decoration:underline}
+.nav{display:flex;gap:10px;margin-top:24px}
+.btn{flex:1;border:0;border-radius:12px;padding:14px;font:600 14px Montserrat;cursor:pointer;transition:transform .1s}
+.btn:active{transform:scale(.98)}
+.btn.main{background:var(--or);color:#fff}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);flex:0 0 auto;padding:14px 18px}
+.err{color:#c0392b;font-size:12px;margin-top:8px;min-height:16px}
+.send{display:grid;gap:10px;margin-top:6px}
+.send a,.send button{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;padding:14px;font:600 14px Montserrat;text-decoration:none;cursor:pointer;border:0}
+.wa{background:#25a35a;color:#fff}.mx{background:linear-gradient(90deg,#3d6cff,#8b3dff);color:#fff}.sh{background:var(--ink);color:#fff}
+.alt{display:none;background:#fff;border:1px solid var(--or);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;color:var(--ink)}
+.alt.on{display:block}
+.alt a{display:inline-block;margin-top:8px;color:var(--or);font-weight:600}.tg{background:#2a9fd8;color:#fff}
+.cp{background:#fff;color:var(--ink);border:1px solid var(--line)!important}
+.send svg{width:20px;height:20px;fill:currentColor}
+.prev{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.6;white-space:pre-wrap;max-height:180px;overflow:auto;margin:10px 0 14px;color:var(--mut)}
+.note{font-size:11px;color:var(--mut);margin-top:12px;line-height:1.5}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;z-index:10;transition:transform .3s}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(20,16,12,.5);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.on{display:flex}
+.modal .box{background:#faf6f0;border-radius:16px;max-width:520px;max-height:80vh;overflow:auto;padding:22px;font-size:13px;line-height:1.6}
+.modal h3{font-size:16px;margin-bottom:10px}.modal p{margin-bottom:8px;color:var(--mut)}
+
+
+.card{max-width:none}
+@media (max-width:640px){
+  .arr{display:none}
+  .hero h1{font-size:22px}
+  .layer{align-items:flex-end;padding:0}
+  .sheet{max-height:88%;border-radius:22px 22px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom))}
+  .row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="gal" id="gal">
+  <canvas class="cv" id="cv"></canvas>
+  <button class="arr l" id="prevS" aria-label="Предыдущее фото">‹</button>
+  <button class="arr r" id="nextS" aria-label="Следующее фото">›</button>
+  <div class="hero">
+    <div class="cap" id="cap"></div>
+    <div class="dots" id="dots"></div>
+    <h1>Мебель на заказ по вашим размерам</h1>
+    <p>Ответьте на 5 коротких вопросов — подготовлю идею и ориентир по стоимости.</p>
+    <button class="cta" id="open">Рассчитать мой проект</button>
+  </div>
+</div>
+<div class="mark"><b>BVS<span>space</span></b><small>мебель<br>на заказ</small></div>
+
+<div class="layer" id="layer"><div class="sheet" id="sheet">
+<form class="card" id="f" autocomplete="on" novalidate>
+  <div class="prog" id="prog"></div>
+
+  <section class="step on" data-t="Начало" style="display:none!important"></section>
+  <!-- 1. Что делаем -->
+  <section class="step" data-t="Что делаем">
+    <div class="kick">Шаг 1 из 5</div>
+    <h2>Что будем делать?</h2>
+    <p class="lead">Можно выбрать несколько.</p>
+    <div class="grid" data-name="Мебель" data-multi="1" data-req="1">
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="10" rx="1"/><path d="M3 14h18M8 4h8v4H8z"/></svg>Кухня</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M10 12h0M14 12h0"/></svg>Шкаф / гардеробная</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><path d="M5 21V5h9v16M14 9h5v12M8 12h3"/></svg>Прихожая</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="11" rx="1"/><path d="M3 19h18"/></svg>ТВ-зона / гостиная</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6"/></svg>Детская</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM7 12V5a2 2 0 0 1 4 0"/></svg>Ванная / постирочная</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="3"/><path d="M5 14v6M19 14v6M8 11V6h8v5"/></svg>Кабинет</button>
+      <button type="button" class="tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>Другое</button>
+    </div>
+    <div class="err"></div>
+  </section>
+
+  <!-- 2. Помещение -->
+  <section class="step" data-t="Помещение">
+    <div class="kick">Шаг 2 из 5</div>
+    <h2>Где будет стоять мебель?</h2>
+    <div class="q">Город или район</div>
+    <input type="text" name="Где" placeholder="Например: Москва, Митино" autocomplete="address-level2">
+    <div class="q">Стадия ремонта</div>
+    <div class="chips" data-name="Ремонт">
+      <button type="button" class="chip">Черновая отделка</button>
+      <button type="button" class="chip">Чистовая, идёт ремонт</button>
+      <button type="button" class="chip">Ремонт готов, живём</button>
+    </div>
+    <div class="q">Примерные размеры <small>— если знаете</small></div>
+    <input type="text" name="Размеры" placeholder="Например: стена 3,2 м, высота 2,7 м">
+  </section>
+
+  <!-- 3. Стиль -->
+  <section class="step" data-t="Стиль">
+    <div class="kick">Шаг 3 из 5</div>
+    <h2>Какой стиль вам ближе?</h2>
+    <div class="chips" data-name="Стиль" data-multi="1">
+      <button type="button" class="chip">Современный</button>
+      <button type="button" class="chip">Минимализм</button>
+      <button type="button" class="chip">Скандинавский</button>
+      <button type="button" class="chip">Классика / неоклассика</button>
+      <button type="button" class="chip">Лофт</button>
+      <button type="button" class="chip">Пока не знаю</button>
+    </div>
+    <div class="q">Фасады</div>
+    <div class="chips" data-name="Фасады" data-multi="1">
+      <button type="button" class="chip">Под дерево</button>
+      <button type="button" class="chip">Однотонные матовые</button>
+      <button type="button" class="chip">Эмаль</button>
+      <button type="button" class="chip">С фрезеровкой</button>
+      <button type="button" class="chip">Посоветуйте</button>
+    </div>
+    <div class="q">Ручки</div>
+    <div class="chips" data-name="Ручки">
+      <button type="button" class="chip">Без ручек (нажатием)</button>
+      <button type="button" class="chip">С ручками</button>
+      <button type="button" class="chip">Всё равно</button>
+    </div>
+  </section>
+
+  <!-- 4. Бюджет и сроки -->
+  <section class="step" data-t="Бюджет">
+    <div class="kick">Шаг 4 из 5</div>
+    <h2>Бюджет и сроки</h2>
+    <p class="lead">Это поможет сразу предложить подходящие материалы и фурнитуру.</p>
+    <div class="q">Ориентир по бюджету</div>
+    <div class="chips" data-name="Бюджет">
+      <button type="button" class="chip">до 100 тыс. ₽</button>
+      <button type="button" class="chip">100–200 тыс. ₽</button>
+      <button type="button" class="chip">200–400 тыс. ₽</button>
+      <button type="button" class="chip">от 400 тыс. ₽</button>
+      <button type="button" class="chip">Пока не знаю</button>
+    </div>
+    <div class="q">Когда нужна мебель</div>
+    <div class="chips" data-name="Сроки">
+      <button type="button" class="chip">Как можно скорее</button>
+      <button type="button" class="chip">В течение 1–2 месяцев</button>
+      <button type="button" class="chip">Не горит</button>
+    </div>
+  </section>
+
+  <!-- 5. Контакты -->
+  <section class="step" data-t="Контакты">
+    <div class="kick">Шаг 5 из 5</div>
+    <h2>Как с вами связаться?</h2>
+    <div class="row">
+      <input type="text" name="Имя" placeholder="Ваше имя" autocomplete="given-name">
+      <input type="tel" name="Телефон" placeholder="+7 ___ ___-__-__" autocomplete="tel">
+    </div>
+    <div class="q">Удобнее</div>
+    <div class="chips" data-name="Связь">
+      <button type="button" class="chip">Позвонить</button>
+      <button type="button" class="chip">Написать в мессенджер</button>
+    </div>
+    <div class="q">Комментарий <small>— что важно учесть</small></div>
+    <textarea name="Комментарий" placeholder="Например: нужна ниша под стиральную машину, много обуви…"></textarea>
+    <label class="agree"><input type="checkbox" id="ok"> <span>Согласен(на) на обработку персональных данных в соответствии с <a id="pol">политикой конфиденциальности</a></span></label>
+    <div class="err"></div>
+  </section>
+
+  <!-- 6. Отправка -->
+  <section class="step" data-t="Отправка">
+    <div class="kick">Готово</div>
+    <h2>Спасибо! Осталось отправить</h2>
+    <p class="lead" style="margin-bottom:4px">Нажмите кнопку — откроется мессенджер с уже готовым текстом, останется нажать «Отправить».</p>
+    <div class="prev" id="prev"></div>
+    <div class="send">
+      <a class="wa" id="wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1z"/></svg>Отправить в WhatsApp</a>
+      <a class="tg" id="tg" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21.9 4.3 18.6 19.8c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.4 1.1 11.9c-1.1-.3-1.1-1.1.2-1.6L20.5 3c.9-.3 1.7.2 1.4 1.3z"/></svg>Отправить в Telegram</a>
+      <a class="mx" id="mx" href="#" target="_blank" rel="noopener"><b style="font-weight:800;letter-spacing:.5px">MAX</b>Отправить в MAX</a>
+      <button type="button" class="sh" id="sh"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Другой мессенджер или SMS</button>
+      <div class="alt" id="alt"><b>Ответы скопированы.</b> Откройте MAX, любой другой мессенджер или SMS — найдите меня по номеру, вставьте текст и отправьте: <b>+7 910 019-80-80</b>.<a id="smsA" href="#">Открыть SMS</a></div>
+      <button type="button" class="cp" id="cp">Скопировать ответы</button>
+    </div>
+    <p class="note">Или позвоните: <b>+7 910 019-80-80</b> · почта: <b>vbs0405@mail.ru</b></p>
+  </section>
+
+  <div class="nav" id="nav">
+    <button type="button" class="btn ghost" id="back">Назад</button>
+    <button type="button" class="btn main" id="next">Дальше</button>
+  </div>
+</form>
+</div></div>
+
+<div class="modal" id="modal"><div class="box">
+  <h3>Политика конфиденциальности (черновик)</h3>
+  <p>Оператор персональных данных — Блажков Владислав, BVSspace (мебель на заказ), тел. +7 910 019-80-80, vbs0405@mail.ru.</p>
+  <p>Какие данные: имя, телефон, город/район и ответы анкеты, которые вы отправляете сами.</p>
+  <p>Зачем: чтобы связаться с вами, подготовить предложение и рассчитать стоимость мебели.</p>
+  <p>Данные не передаются третьим лицам, кроме случаев, предусмотренных законом. Вы можете отозвать согласие, написав на vbs0405@mail.ru, — данные будут удалены.</p>
+  <button type="button" class="btn main" style="width:100%;margin-top:8px" id="mclose">Понятно</button>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<div class="toast" id="toast"></div>
+<script>
+// ===== настройки =====
+const PHONE = '79100198080';           // WhatsApp — номер без +
+const TG_USER = 'BVS04';                    // Telegram username без @
+const MAX_LINK = '';                        // ссылка на ваш профиль в MAX (max.ru/u/…). Пусто — кнопка MAX скрыта
+const SLIDES = [   // [файл, подпись]
+  ['img/k1.jpg','Кухня в доме из бревна'],
+  ['img/g1.jpg','Гостиная · витрины с подсветкой'],
+  ['img/p1.jpg','Прихожая · фасады-жалюзи'],
+  ['img/p2.jpg','Прихожая · шкаф с банкеткой'],
+  ['img/p3.jpg','Прихожая · открытая секция'],
+];
+// =====================
+
+const gal=document.getElementById('gal'),cap=document.getElementById('cap'),dots=document.getElementById('dots');
+// Фото рисуются на холсте: плавная смена одинаково работает на любом телефоне, без глюков слоёв
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
+const load=f=>{const im=new Image();im.src=f;im.onload=()=>draw();return im};
+const P=SLIDES.map(([src])=>({pic:load(src.replace('.jpg','.webp')),fill:load(src.replace('.jpg','_b.jpg'))}));
+SLIDES.forEach(()=>dots.appendChild(document.createElement('i')));
+let si=0,from=0,t0=0,picA=1,picT=1;const DUR=1600;
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+function size(){const r=Math.min(devicePixelRatio||1,2);cv.width=innerWidth*r;cv.height=innerHeight*r;cx.setTransform(r,0,0,r,0,0);draw()}
+function cover(im,a){if(!im.complete||!im.naturalWidth)return;const W=innerWidth,H=innerHeight,k=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;cx.globalAlpha=a;cx.drawImage(im,(W-w)/2,(H-h)/2,w,h)}
+function contain(im,a){if(!im.complete||!im.naturalWidth||a<=0)return;const top=64,bot=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hb'))||200)-10;
+  const W=innerWidth,H=innerHeight-top-bot,k=Math.min(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*k,h=im.naturalHeight*k;cx.globalAlpha=a;cx.drawImage(im,(W-w)/2,top+(H-h)/2,w,h)}
+function draw(){
+  const p=t0?Math.min((performance.now()-t0)/DUR,1):1,e=ease(p);
+  cx.globalAlpha=1;cx.fillStyle='#1d1a17';cx.fillRect(0,0,innerWidth,innerHeight);
+  cover(P[from].fill,1);cover(P[si].fill,e);          // размытый фон
+  contain(P[from].pic,(1-e)*picA);contain(P[si].pic,e*picA); // само фото целиком
+  return p<1;
+}
+function loop(){const more=draw();// плавно прячем/показываем чёткое фото при открытии анкеты
+  if(Math.abs(picA-picT)>.01){picA+=(picT-picA)*.12;requestAnimationFrame(loop)}else{picA=picT;if(more)requestAnimationFrame(loop)}}
+function go(n){const nx=(n+SLIDES.length)%SLIDES.length;if(nx===si)return;
+  const p=t0?Math.min((performance.now()-t0)/DUR,1):1;from=p<1?si:si;si=nx;t0=performance.now();
+  [...dots.children].forEach((x,k)=>x.classList.toggle('on',k===si));cap.textContent=SLIDES[si][1];requestAnimationFrame(loop)}
+addEventListener('resize',size);
+[...dots.children][0].classList.add('on');cap.textContent=SLIDES[0][1];
+const hero=document.querySelector('.hero');function hb(){document.documentElement.style.setProperty('--hb',hero.offsetHeight+'px')}hb();addEventListener('resize',hb);size();
+document.getElementById('nextS').onclick=()=>go(si+1);
+document.getElementById('prevS').onclick=()=>go(si-1);
+let tx=null;
+gal.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+gal.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)go(si+(dx<0?1:-1));tx=null});
+gal.addEventListener('click',e=>{if(!e.target.closest('button'))go(si+1)});
+
+// анкета поверх галереи; фото за ней меняется при каждом нажатии
+const sheet=document.getElementById('sheet');
+function openForm(){document.body.classList.add('form');show(1);picT=0;requestAnimationFrame(loop)}
+function closeForm(){document.body.classList.remove('form');picT=1;requestAnimationFrame(loop)}
+document.getElementById('open').onclick=openForm;
+document.getElementById('layer').addEventListener('click',e=>{if(e.target.id==='layer')closeForm()});
+document.getElementById('f').addEventListener('click',e=>{if(e.target.closest('button'))go(si+1)});
+
+const steps=[...document.querySelectorAll('.step')], prog=document.getElementById('prog');
+const N=steps.length-2;
+for(let i=0;i<N;i++)prog.appendChild(document.createElement('i'));
+let cur=0;
+const next=document.getElementById('next'), back=document.getElementById('back'), nav=document.getElementById('nav');
+// выбор вариантов
+document.querySelectorAll('[data-name]').forEach(g=>{
+  if(g.tagName==='INPUT'||g.tagName==='TEXTAREA')return;
+  g.addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(g.dataset.multi){b.classList.toggle('sel')}
+    else{[...g.children].forEach(x=>x.classList.toggle('sel',x===b&&!x.classList.contains('sel')))}
+    if(g.dataset.req)g.parentElement.querySelector('.err').textContent='';
+  });
+});
+
+function show(i){
+  steps[cur].classList.remove('on');cur=i;steps[cur].classList.add('on');
+  [...prog.children].forEach((x,k)=>x.classList.toggle('done',k<cur));
+  next.textContent=cur===N?'Готово':'Дальше';
+  back.textContent=cur<=1?'К работам':'Назад';
+  nav.style.display=cur===steps.length-1?'none':'flex';
+  if(cur===steps.length-1)build();
+  sheet.scrollTop=0;
+}
+function valid(){
+  const s=steps[cur];
+  const req=s.querySelector('[data-req]');
+  if(req&&!req.querySelector('.sel')){s.querySelector('.err').textContent='Выберите хотя бы один вариант';return false}
+  if(cur===N){
+    const ph=document.querySelector('[name=Телефон]').value.replace(/\D/g,'');
+    const nm=document.querySelector('[name=Имя]').value.trim();
+    const e=s.querySelector('.err');
+    if(!nm){e.textContent='Напишите, как к вам обращаться';return false}
+    if(ph.length<10){e.textContent='Проверьте номер телефона';return false}
+    if(!document.getElementById('ok').checked){e.textContent='Нужно согласие на обработку данных';return false}
+    e.textContent='';
+  }
+  return true;
+}
+next.onclick=()=>{if(valid())show(cur+1)};
+back.onclick=()=>{if(cur<=1)closeForm();else show(cur-1)};
+show(1);
+
+let TEXT='';
+function build(){
+  const L=['Здравствуйте! Анкета проекта BVSspace:',''];
+  document.querySelectorAll('[data-name]').forEach(g=>{
+    let v;
+    if(g.tagName==='INPUT'||g.tagName==='TEXTAREA')return;
+    v=[...g.querySelectorAll('.sel')].map(b=>b.textContent.trim()).join(', ');
+    if(v)L.push(`• ${g.dataset.name}: ${v}`);
+  });
+  document.querySelectorAll('input[name],textarea[name]').forEach(f=>{if(f.value.trim())L.push(`• ${f.name}: ${f.value.trim()}`)});
+  TEXT=L.join('\n');
+  document.getElementById('prev').textContent=TEXT;
+  document.getElementById('wa').href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(TEXT);
+  document.getElementById('tg').href=TG_USER?`https://t.me/${TG_USER}?text=${encodeURIComponent(TEXT)}`:`https://t.me/+${PHONE}`;
+  if(MAX_LINK)document.getElementById('mx').href=MAX_LINK;
+  document.getElementById('smsA').href='sms:+'+PHONE+(/iPhone|iPad/.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(TEXT);
+}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2600)}
+async function copy(){try{await navigator.clipboard.writeText(TEXT);return true}catch(e){return false}}
+// MAX: копируем ответы и открываем ваш профиль в MAX
+const mx=document.getElementById('mx');
+mx.addEventListener('click',e=>{copy();
+  if(!MAX_LINK){e.preventDefault();const al=document.getElementById('alt');al.querySelector('b').textContent='Ответы скопированы.';al.dataset.mx=1;al.classList.add('on');toast('Откройте MAX и вставьте текст в чат')}
+  else toast('Ответы скопированы — вставьте их в чат MAX')});
+// Любой другой мессенджер: системное меню «Поделиться» (MAX, VK, SMS, Viber…), если его нет — SMS
+document.getElementById('sh').onclick=async()=>{
+  if(navigator.share){try{await navigator.share({text:TEXT});return}catch(e){if(e&&e.name==='AbortError')return}}
+  // меню «Поделиться» недоступно (например, внутри приложения Claude) — копируем и подсказываем
+  await copy();document.getElementById('alt').classList.add('on');
+};
+document.getElementById('cp').onclick=async()=>{toast(await copy()?'Ответы скопированы':'Выделите текст выше и скопируйте')};
+// Telegram: ссылка открывает чат, а ответы на всякий случай копируются
+document.getElementById('tg').addEventListener('click',()=>{copy();toast('Ответы скопированы — если чат пустой, нажмите «Вставить»')});
+const modal=document.getElementById('modal');
+document.getElementById('pol').onclick=e=>{e.preventDefault();modal.classList.add('on')};
+document.getElementById('mclose').onclick=()=>modal.classList.remove('on');
+
+
+
+</script>
+</body>
+</html>
